@@ -1,12 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
+
 import './App.css';
+
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+
+import LoginDisplay from './components/displays/LoginDisplay';
+import RegisterDisplay from './components/displays/RegisterDisplay';
 import Navbar from './components/displays/Navbar';
 
 function App() {
   return (
     <div className="App">
-      <Navbar></Navbar>
+      <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navbar />}>
+          <Route path="login" element={<LoginDisplay />} />
+          <Route path="register" element={<RegisterDisplay />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
     </div>
   );
 }

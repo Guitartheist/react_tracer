@@ -1,6 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+//There are some 'never used' warnings about jquery and popper imports but they have to be here for some elements of Bootstrap 5 to work properly
 import $ from 'jquery';
 import Popper from 'popper.js';
+
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import React from 'react';
 import ReactDOM from 'react-dom';

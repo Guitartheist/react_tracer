@@ -20,6 +20,13 @@ function Navbar() {
                             </li>
                         </ul>
                     </div>
+                    <div className="d-flex flex-row-reverse bd-highlight">
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li className="nav-item">
+                                <Link className="nav-link active" aria-current="page" to="/darkmode">Darkmode</Link>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </nav>
             <Outlet />

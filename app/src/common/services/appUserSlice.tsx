@@ -36,10 +36,15 @@ const appUserSlice = api.injectEndpoints({
                                 password: ''
                             }
                         }
-                        response.json().then(data => {
-                            auth.user = data
-                        });
+                        try {
+                            response.json().then(data => {
+                                auth.user = data
+                            })
                         setAuthState(auth)
+                        }
+                        finally {
+                            
+                        }
                         return response.json()
                     }
                 }

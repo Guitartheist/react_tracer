@@ -2,8 +2,6 @@ import React, { useState } from "react";
 
 import { useRegisterAppUserMutation } from '../../common/services/appUserSlice'
 
-//useRegisterAppUserMutation()
-
 function RegisterDisplay() {
     const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
@@ -29,24 +27,24 @@ function RegisterDisplay() {
                             }} />
                     </div>
                     <div className="input-group mb-3">
-                        <input type="text" 
-                        className="form-control" 
-                        placeholder="Username" 
-                        aria-label="Username" 
-                        aria-describedby="basic-addon1"
-                        onChange={(e) => {
-                            setUsername(e.target.value);
-                        }} />
+                        <input type="text"
+                            className="form-control"
+                            placeholder="Username"
+                            aria-label="Username"
+                            aria-describedby="basic-addon1"
+                            onChange={(e) => {
+                                setUsername(e.target.value);
+                            }} />
                     </div>
                     <div className="input-group mb-3">
-                        <input type="password" 
-                        className="form-control" 
-                        placeholder="Password" 
-                        aria-label="Username" 
-                        aria-describedby="basic-addon1"
-                        onChange={(e) => {
-                            setPassword(e.target.value);
-                        }} />
+                        <input type="password"
+                            className="form-control"
+                            placeholder="Password"
+                            aria-label="Username"
+                            aria-describedby="basic-addon1"
+                            onChange={(e) => {
+                                setPassword(e.target.value);
+                            }} />
                     </div>
                     <p className="btn btn-primary" onClick={RegisterUser}>Register</p>
                 </div>

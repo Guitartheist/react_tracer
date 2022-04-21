@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { RootState } from '../store'
+import type { RootState } from '../store'
 import { selectToken } from './authSlice'
 
 export const api = createApi({
@@ -12,6 +12,8 @@ export const api = createApi({
             // if (token.length>0) {
             //   headers.append('authorization', `Bearer ${token}`)
             // }
+
+            console.log(token)
         
             return headers
           },

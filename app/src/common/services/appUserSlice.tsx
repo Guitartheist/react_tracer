@@ -23,8 +23,12 @@ const appUserSlice = api.injectEndpoints({
                     method: 'POST',
                     body,
                     responseHandler: (response) => {
+                        let t = response.headers.get('authorization')
+                        if (!t) {
+                            t = ''
+                        }
                         const auth: AuthState = {
-                            token: response.headers.get('authorization'),
+                            token: t,
                             user: {
                                 id: 0,
                                 email: '',

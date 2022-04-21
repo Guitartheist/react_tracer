@@ -7,11 +7,11 @@ export const api = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:8080/',
         prepareHeaders: (headers) => {
-            const token = selectToken
+            let token = selectToken
 
-            if (token) {
-              headers.set('authorization', `Bearer ${token}`)
-            }
+            // if (token.length>0) {
+            //   headers.append('authorization', `Bearer ${token}`)
+            // }
         
             return headers
           },

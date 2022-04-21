@@ -1,5 +1,5 @@
 export interface AppUser {
-    id: number,
+    id?: number,
     email: string,
     username: string,
     password : string

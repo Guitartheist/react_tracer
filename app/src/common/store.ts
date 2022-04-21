@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-// Or from '@reduxjs/toolkit/query/react'
-import { setupListeners } from '@reduxjs/toolkit/query'
+import { setupListeners } from '@reduxjs/toolkit/query/react'
 import { api } from './services/api'
 import { authSlice } from './services/authSlice'
 
@@ -16,3 +15,4 @@ export const store = configureStore({
 setupListeners(store.dispatch)
 
 export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch

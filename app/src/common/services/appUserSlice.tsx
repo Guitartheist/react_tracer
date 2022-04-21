@@ -1,5 +1,6 @@
 import { api } from './api';
 import { AppUser } from '../types'
+import { AuthState, setAuthState } from './authSlice'
 
 const appUserSlice = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -21,6 +22,22 @@ const appUserSlice = api.injectEndpoints({
                     url: `user/login`,
                     method: 'POST',
                     body,
+                    responseHandler: (response) => {
+                        const auth: AuthState = {
+                            token: response.headers.get('authorization'),
+                            user: {
+                                id: 0,
+                                email: '',
+                                username: '',
+                                password: ''
+                            }
+                        }
+                        response.json().then(data => {
+                            auth.user = data
+                        });
+                        setAuthState(auth)
+                        return response.json()
+                    }
                 }
             },
         }),

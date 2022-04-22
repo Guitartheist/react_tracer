@@ -1,6 +1,5 @@
 import { api } from './api';
 import { AppUser } from '../types'
-import { AuthState, setAuthState } from './authSlice'
 
 const appUserSlice = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -23,33 +22,19 @@ const appUserSlice = api.injectEndpoints({
                     method: 'POST',
                     body,
                     responseHandler: (response) => {
-                        let t = response.headers.get('authorization')
-                        if (!t) {
-                            t = ''
-                        }
-                        const auth: AuthState = {
-                            token: t,
-                            user: {
-                                id: 0,
-                                email: '',
-                                username: '',
-                                password: ''
-                            }
-                        }
-                        try {
-                            response.json().then(data => {
-                                auth.user = data
-                            })
-                        setAuthState(auth)
-                        }
-                        finally {
-                            
-                        }
+                        // let t = response.headers.get('authorization')
+
+                        //     response.json().then(data => {
+                        //         auth.user = data
+                        // store the token and logged in user info in local storage
+
                         return response.json()
                     }
                 }
             },
         }),
+        //LogoutAppUser
+        //invalidate token, remove token from storage, remove user info from storage
     }),
     overrideExisting: false
 })

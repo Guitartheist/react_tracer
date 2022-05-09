@@ -24,7 +24,7 @@ function App() {
               path="/"
               element={
                 <main style={{ padding: "1rem" }}>
-                  <p>Replace this with the landing page element!</p>
+                  <p>Replace this with the landing page component!</p>
                 </main>
               }
             />
@@ -32,7 +32,7 @@ function App() {
               path="*"
               element={
                 <main style={{ padding: "1rem" }}>
-                  <p>Replace this with 404 or invalid URL element!</p>
+                  <p>Replace this with 404 or invalid URL component!</p>
                 </main>
               }
             />

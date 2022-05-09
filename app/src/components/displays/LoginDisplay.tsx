@@ -7,13 +7,14 @@ function LoginDisplay() {
     const [login, result] = useLoginAppUserMutation({})
 
     function LoginUser() {
-        login({ username, password })
+        console.log( login({ username, password }) )
     }
 
     return (
         <div className="d-flex justify-content-center">
             <div className="card mw-320" >
                 <div className="card-body">
+                    <h3>Login</h3>
                     <div className="input-group mb-3">
                         <input type="text" 
                         className="form-control" 

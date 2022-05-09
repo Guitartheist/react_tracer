@@ -5,17 +5,14 @@ export const api = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:8080/',
         prepareHeaders: (headers) => {
-            let token = ''
-            // get token from local storage
+            let token = "" //read token from storage
 
-            // if (token.length>0) {
-            //   headers.append('authorization', `Bearer ${token}`)
-            // }
+            if (token.length > 0) {
+                headers.append('authorization', `Bearer ${token}`)
+            }
 
-            console.log(token)
-        
             return headers
-          },
+        },
     }),
     endpoints: () => ({})
 })

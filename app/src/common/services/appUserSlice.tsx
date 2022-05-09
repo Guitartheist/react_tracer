@@ -2,6 +2,7 @@ import { api } from './api';
 import { AppUser } from '../types'
 
 const appUserSlice = api.injectEndpoints({
+
     endpoints: (builder) => ({
         getUserByUserName: builder.query<AppUser, string>({
             query: (name) => `user/${name}`,
@@ -15,18 +16,16 @@ const appUserSlice = api.injectEndpoints({
                 }
             },
         }),
-        LoginAppUser: builder.mutation<AppUser, AppUser>({
+        loginAppUser: builder.mutation<AppUser, AppUser>({
             query(body) {
                 return {
                     url: `user/login`,
                     method: 'POST',
                     body,
                     responseHandler: (response) => {
-                        // let t = response.headers.get('authorization')
+                        let token = response.headers.get('authorization')
 
-                        //     response.json().then(data => {
-                        //         auth.user = data
-                        // store the token and logged in user info in local storage
+                        //add header data to token storage
 
                         return response.json()
                     }

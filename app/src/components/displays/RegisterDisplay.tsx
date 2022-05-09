@@ -16,6 +16,7 @@ function RegisterDisplay() {
         <div className="d-flex justify-content-center">
             <div className="card max-320" >
                 <div className="card-body">
+                    <h3>Register</h3>
                     <div className="input-group mb-3">
                         <input type="text"
                             className="form-control"

@@ -7,7 +7,14 @@ function LoginDisplay() {
     const [login, result] = useLoginAppUserMutation({})
 
     function LoginUser() {
-        console.log( login({ username, password }) )
+        try{
+            const payload = login({username, password}).unwrap();
+            console.log('fulfilled', payload.then(a=>{
+                console.log(a)
+            }))
+          } catch (error) {
+            console.error('rejected', error);
+          }
     }
 
     return (

@@ -22,10 +22,12 @@ const appUserSlice = api.injectEndpoints({
                     url: `user/login`,
                     method: 'POST',
                     body,
-                    responseHandler: (response) => {
-                        let token = response.headers.get('authorization')
+                    responseHandler: async (response) => {
+                        let token = await response.headers.get('authorization')
 
-                        //add header data to token storage
+                        if (token) {
+                            localStorage.setItem('token',token)
+                        }
 
                         return response.json()
                     }

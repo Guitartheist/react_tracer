@@ -9,7 +9,14 @@ function RegisterDisplay() {
     const [register, result] = useRegisterAppUserMutation({})
 
     function RegisterUser() {
-        register({ username, email, password })
+        try{
+        const payload = register({ username, email, password }).unwrap();
+        console.log('fulfilled', payload.then(a=>{
+            console.log(a)
+        }))
+      } catch (error) {
+        console.error('rejected', error);
+      }
     }
 
     return (

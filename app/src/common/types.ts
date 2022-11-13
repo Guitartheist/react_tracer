@@ -1,7 +1,6 @@
 export interface AppUser {
     id?: number,
-    email?: string,
-    token?: string,
+    email: string,
     username: string,
-    password : string
+    password?: string
 }

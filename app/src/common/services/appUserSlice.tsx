@@ -5,7 +5,7 @@ const appUserSlice = api.injectEndpoints({
 
     endpoints: (builder) => ({
         getUserByUserName: builder.query<AppUser, string>({
-            query: (name) => `user/${name}`,
+            query: (name) => `user/profile/${name}`
         }),
         registerAppUser: builder.mutation<AppUser, AppUser>({
             query(body) {
@@ -34,6 +34,15 @@ const appUserSlice = api.injectEndpoints({
                 }
             },
         }),
+        updateAppUser: builder.mutation<AppUser, AppUser>({
+            query(body) {
+                return {
+                    url: 'user/profile',
+                    method: 'PUT',
+                    body,
+                }
+            }
+        })
         //LogoutAppUser
         //invalidate token, remove token from storage, remove user info from storage
     }),
@@ -42,4 +51,4 @@ const appUserSlice = api.injectEndpoints({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetUserByUserNameQuery, useRegisterAppUserMutation, useLoginAppUserMutation } = appUserSlice
+export const { useGetUserByUserNameQuery, useRegisterAppUserMutation, useLoginAppUserMutation, useUpdateAppUserMutation } = appUserSlice

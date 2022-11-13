@@ -1,21 +1,24 @@
 import React, { useState } from "react";
 
 import { useRegisterAppUserMutation } from '../../common/services/appUserSlice'
+import { useNavigate } from 'react-router-dom';
 
 function RegisterDisplay() {
     const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [register, result] = useRegisterAppUserMutation({})
+    const navigate = useNavigate()
+    const [displayError, setDisplayError] = useState("")
 
     function RegisterUser() {
         try{
         const payload = register({ username, email, password }).unwrap();
-        console.log('fulfilled', payload.then(a=>{
-            console.log(a)
+        console.log('fulfilled', payload.then(user=>{
+            navigate('/login')
         }))
       } catch (error) {
-        console.error('rejected', error);
+        setDisplayError('Registration Failed')
       }
     }
 

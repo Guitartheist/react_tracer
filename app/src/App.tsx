@@ -10,6 +10,7 @@ import {
 
 import LoginDisplay from './components/displays/LoginDisplay';
 import RegisterDisplay from './components/displays/RegisterDisplay';
+import UserDisplay from './components/displays/UserDisplay';
 import Navbar from './components/displays/Navbar';
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
                 </main>
               }
             />
+            <Route path='/profile/:userName' element={<UserDisplay />} />
           </Route>
         </Routes>
       </BrowserRouter>

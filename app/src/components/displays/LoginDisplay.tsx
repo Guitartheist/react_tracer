@@ -1,19 +1,23 @@
 import React, { useState } from "react";
 import { useLoginAppUserMutation } from '../../common/services/appUserSlice'
+import { useNavigate } from 'react-router-dom';
 
 function LoginDisplay() {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [login, result] = useLoginAppUserMutation({})
+    const navigate = useNavigate()
+    const [displayError, setDisplayError] = useState("")
 
     function LoginUser() {
         try{
-            const payload = login({username, password}).unwrap();
-            console.log('fulfilled', payload.then(a=>{
-                console.log(a)
+            const payload = login({username, password, email:''}).unwrap();
+            console.log('fulfilled', payload.then(user=>{
+                navigate('/profile/'+username)
             }))
           } catch (error) {
-            console.error('rejected', error);
+            setDisplayError('Login Failed')
+            console.log('ok then')
           }
     }
 
@@ -21,6 +25,10 @@ function LoginDisplay() {
         <div className="d-flex justify-content-center">
             <div className="card mw-320" >
                 <div className="card-body">
+                {
+                displayError ?
+                <h3>{displayError}</h3> : ''
+            }
                     <h3>Login</h3>
                     <div className="input-group mb-3">
                         <input type="text" 

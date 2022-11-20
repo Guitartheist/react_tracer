@@ -1,3 +1,4 @@
+import { getTimeMeasureUtils } from '@reduxjs/toolkit/dist/utils';
 import React from 'react';
 import { Outlet, Link } from "react-router-dom";
 
@@ -17,6 +18,9 @@ function Navbar() {
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link active" aria-current="page" to="/login">Login</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link active" aria-current="page" to='/userlist'>Roll Call</Link>
                             </li>
                         </ul>
                     </div>

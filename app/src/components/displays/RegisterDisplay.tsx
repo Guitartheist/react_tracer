@@ -27,7 +27,9 @@ function RegisterDisplay() {
             <div className="card max-320" >
                 <div className="card-body">
                     <h3>Register</h3>
+                    <label>Email</label>
                     <div className="input-group mb-3">
+                        
                         <input type="text"
                             className="form-control"
                             placeholder="Email"
@@ -37,7 +39,9 @@ function RegisterDisplay() {
                                 setEmail(e.target.value);
                             }} />
                     </div>
+                    <label>Username</label>
                     <div className="input-group mb-3">
+                        
                         <input type="text"
                             className="form-control"
                             placeholder="Username"
@@ -47,6 +51,7 @@ function RegisterDisplay() {
                                 setUsername(e.target.value);
                             }} />
                     </div>
+                    <label>Password</label>
                     <div className="input-group mb-3">
                         <input type="password"
                             className="form-control"

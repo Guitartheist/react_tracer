@@ -1,9 +1,18 @@
 import { api } from './api';
 import { AppUser } from '../types'
 
+const pageSize = 10;
+
 const appUserSlice = api.injectEndpoints({
 
     endpoints: (builder) => ({
+        getAllUsernames: builder.query<string[], string>({
+            query: () => '/user/all'
+        }),
+        getPagedUsernames: builder.query<string[], number>({
+            //the API starts at page 0 but users will expect pages to start at 1
+            query: (page) => `/user/${page-1}/${pageSize}`
+        }),
         getUserByUserName: builder.query<AppUser, string>({
             query: (name) => `user/profile/${name}`
         }),
@@ -51,4 +60,9 @@ const appUserSlice = api.injectEndpoints({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetUserByUserNameQuery, useRegisterAppUserMutation, useLoginAppUserMutation, useUpdateAppUserMutation } = appUserSlice
+export const { useGetUserByUserNameQuery, 
+    useRegisterAppUserMutation, 
+    useLoginAppUserMutation, 
+    useUpdateAppUserMutation, 
+    useGetAllUsernamesQuery,
+    useGetPagedUsernamesQuery, } = appUserSlice

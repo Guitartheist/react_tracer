@@ -51,6 +51,7 @@ function UserDisplay() {
                     <div className="card max-320" >
                         <div className="card-body">
                             <h3>{userName}</h3>
+                            <label hidden={hideEdits}>Email</label>
                             <div className="input-group mb-3">
                                 <input type="text"
                                     className="form-control"
@@ -62,10 +63,12 @@ function UserDisplay() {
                                             setEmail(e.target.value);
                                     }} />
                             </div>
+                            <label hidden={hideEdits}>New Password</label>
                             <div className="input-group mb-3">
+                                
                                 <input type="password"
                                     className="form-control"
-                                    placeholder="Password"
+                                    placeholder="Optional"
                                     aria-label="Username"
                                     aria-describedby="basic-addon1"
                                     hidden={hideEdits}

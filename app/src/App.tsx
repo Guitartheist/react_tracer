@@ -11,6 +11,7 @@ import {
 import LoginDisplay from './components/displays/LoginDisplay';
 import RegisterDisplay from './components/displays/RegisterDisplay';
 import UserDisplay from './components/displays/UserDisplay';
+import UserListDisplay from './components/displays/UserListDisplay';
 import Navbar from './components/displays/Navbar';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/" element={<Navbar />}>
             <Route path="login" element={<LoginDisplay />} />
             <Route path="register" element={<RegisterDisplay />} />
+            <Route path="userlist" element={<UserListDisplay />} />
             <Route
               path="/"
               element={

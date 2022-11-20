@@ -30,6 +30,7 @@ function LoginDisplay() {
                 <h3>{displayError}</h3> : ''
             }
                     <h3>Login</h3>
+                    <label>Username</label>
                     <div className="input-group mb-3">
                         <input type="text" 
                         className="form-control" 
@@ -40,6 +41,7 @@ function LoginDisplay() {
                             setUsername(e.target.value);
                         }} />
                     </div>
+                    <label>Password</label>
                     <div className="input-group mb-3">
                         <input type="password" 
                         className="form-control" 

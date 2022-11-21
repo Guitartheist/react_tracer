@@ -1,19 +1,16 @@
 import React, { useState } from "react";
-import { useNavigate, useParams } from 'react-router-dom';
-import { isArrayBuffer, isStringObject } from "util/types";
+import { useParams } from 'react-router-dom';
 import { useGetUserByUserNameQuery, useUpdateAppUserMutation } from '../../common/services/appUserSlice'
 
 function UserDisplay() {
     const [update, result] = useUpdateAppUserMutation();
 
     const { userName } =  useParams();
-    const { currentData , isFetching, isError, isLoading, error, refetch } = useGetUserByUserNameQuery( userName ? userName : '', { refetchOnMountOrArgChange: true } );
+    const { currentData , isFetching, isError, isLoading, error } = useGetUserByUserNameQuery( userName ? userName : '', { refetchOnMountOrArgChange: true } );
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [selectedFile, setSelectedFile] = useState("")
-
-    const navigate = useNavigate()
 
     const [displayError, setDisplayError] = useState("")
 
@@ -29,7 +26,12 @@ function UserDisplay() {
                 password, 
                 profileImage : selectedFile }).unwrap();
             payload.then(user=>{
-                refetch()
+                let image = ""
+                if (result.data) 
+                    if (result.data.profileImage)
+                        image = result.data.profileImage
+                if (image)
+                    setSelectedFile( image )
             })
           } catch (error) {
             setDisplayError('Update Failed')
@@ -70,7 +72,7 @@ function UserDisplay() {
                     <div className="card max-320" >
                         <div className="card-body">
                             <h3>{userName}</h3>
-                            <img height="280" width="280" src={currentData.profileImage}/>
+                            <img hidden={!(selectedFile || currentData.profileImage)} height="280" width="280" src={selectedFile ? selectedFile : currentData.profileImage}/>
                             <label hidden={hideEdits}>Upload Image :</label>
                             <div className="input-group mb-3" hidden={hideEdits}>
                                 <input type="file" name="upload_file" onChange={handleImageSelection} />

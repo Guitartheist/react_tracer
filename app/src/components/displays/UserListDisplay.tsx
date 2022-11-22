@@ -1,6 +1,6 @@
-import userEvent from "@testing-library/user-event";
+import { lutimes } from "fs";
 import React, { useState } from "react";
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useGetPagedUsernamesQuery } from '../../common/services/appUserSlice';
 
 function UserDisplay() {
@@ -11,14 +11,8 @@ function UserDisplay() {
 
     const { currentData , isFetching, isError, isLoading, error } = useGetPagedUsernamesQuery( page, { refetchOnMountOrArgChange: true } );
 
-    const [displayError, setDisplayError] = useState("")
-
     return (
         <div className="d-flex justify-content-center">
-            {
-                displayError ?
-                <h3>{displayError}</h3> : ''
-            }
             {
                 isFetching ?
                 <h3>Refreshing...</h3> : ''
@@ -39,7 +33,7 @@ function UserDisplay() {
                         <nav className="navbar navbar-expand-lg navbar-light bg-light">
                             <ul className="vertical-nav">
                                 {currentData.map(elem => {
-                                    return <Link className="nav-link active" aria-current="page" to={`/profile/${elem}`}>{elem}</Link>
+                                    return <Link className="nav-link active" aria-current="page" to={`/profile/${elem.username}`}><img src={elem.profilePreviewImage}/>{elem.username}</Link>
                                 })}
                             </ul>
                         </nav>

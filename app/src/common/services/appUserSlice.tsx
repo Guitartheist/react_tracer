@@ -1,15 +1,15 @@
 import { api } from './api';
-import { AppUser } from '../types'
+import { AppUser, AppUserListEntry } from '../types'
 
 const pageSize = 10;
 
 const appUserSlice = api.injectEndpoints({
 
     endpoints: (builder) => ({
-        getAllUsernames: builder.query<string[], string>({
+        getAllUsernames: builder.query<AppUserListEntry[], string>({
             query: () => '/user/all'
         }),
-        getPagedUsernames: builder.query<string[], number>({
+        getPagedUsernames: builder.query<AppUserListEntry[], number>({
             //the API starts at page 0 but users will expect pages to start at 1
             query: (page) => `/user/${page-1}/${pageSize}`
         }),

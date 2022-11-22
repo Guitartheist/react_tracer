@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 function LoginDisplay() {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-    const [login, result] = useLoginAppUserMutation({})
+    const [login] = useLoginAppUserMutation({})
     const navigate = useNavigate()
     const [displayError, setDisplayError] = useState("")
 
@@ -17,7 +17,6 @@ function LoginDisplay() {
             }))
           } catch (error) {
             setDisplayError('Login Failed')
-            console.log('ok then')
           }
     }
 

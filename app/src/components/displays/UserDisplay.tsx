@@ -40,10 +40,10 @@ function UserDisplay() {
 
     function handleImageSelection(event: { target: { files: any; }; }) {
         let files = event.target.files;
-        let reader = new FileReader();
-        reader.readAsDataURL(files[0]);
- 
-        reader.onload = (e) => {
+        let reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+
+        reader.onload = (e) => {
             if (e.target)
                 setSelectedFile(e.target.result ? e.target.result.toString() : "");
         }
@@ -69,13 +69,13 @@ function UserDisplay() {
             }
             {currentData
                 ? 
-                    <div className="card max-320" >
+                    <div className="card max-320">
                         <div className="card-body">
                             <h3>{userName}</h3>
                             <img hidden={!(selectedFile || currentData.profileImage)} height="280" width="280" src={selectedFile ? selectedFile : currentData.profileImage}/>
                             <label hidden={hideEdits}>Upload Image :</label>
                             <div className="input-group mb-3" hidden={hideEdits}>
-                                <input type="file" name="upload_file" onChange={handleImageSelection} />
+                                <input type="file" name="upload_file" onChange={handleImageSelection} />
                             </div>
                             <label hidden={hideEdits}>Email</label>
                             <div className="input-group mb-3">

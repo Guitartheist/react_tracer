@@ -1,7 +1,11 @@
 import React from 'react';
 import { Outlet, Link } from "react-router-dom";
+import { useGetUsernameFromTokenQuery } from '../../common/services/appUserSlice';
 
 function Navbar() {
+
+    const { currentData , isFetching } = useGetUsernameFromTokenQuery( '', { refetchOnMountOrArgChange: true } );
+
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -11,17 +15,31 @@ function Navbar() {
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li className="nav-item">
-                                <Link className="nav-link active" aria-current="page" to="/register">Register</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link active" aria-current="page" to="/login">Login</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link active" aria-current="page" to='/userlist'>Roll Call</Link>
-                            </li>
-                        </ul>
+                        { isFetching ? 'checking token' : ''}
+                        {  !currentData ?
+                            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li className="nav-item">
+                                    <Link className="nav-link active" aria-current="page" to="/register">Register</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link active" aria-current="page" to="/login">Login</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link active" aria-current="page" to='/userlist'>Roll Call</Link>
+                                </li>
+                            </ul>
+                        :  <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li className="nav-item">
+                                    <Link className="nav-link active" aria-current="page" to='/userlist'>Roll Call</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link active" aria-current="page" to={`/profile/${currentData.username}`}>My Profile</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link active" aria-current="page" to='/logout'>Logout {currentData.username}</Link>
+                                </li>
+                            </ul> }
+                        
                     </div>
                     <div className="d-flex flex-row-reverse bd-highlight">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">

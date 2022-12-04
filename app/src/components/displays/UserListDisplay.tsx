@@ -30,13 +30,11 @@ function UserDisplay() {
                 <div  className="card max-320" >
                     <div className="card-body">
                     <h3>Registered Users</h3>
-                        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                            <ul className="vertical-nav">
+                            <table className=".table">
                                 {currentData.map(elem => {
-                                    return <Link className="nav-link active" aria-current="page" to={`/profile/${elem.username}`}><img src={elem.profilePreviewImage}/>{elem.username}</Link>
+                                    return <Link className="nav-link active" aria-current="page" to={`/profile/${elem.username}`}><tr><td><img src={elem.profilePreviewImage}/></td><td>{elem.username}</td></tr></Link>
                                 })}
-                            </ul>
-                        </nav>
+                            </table>
                         <button onClick={() => setPage(page - 1)} hidden={page<2}>{"<"}</button>
                         <button>{page}</button>
                         <button onClick={() => setPage(page + 1)}>{">"}</button>

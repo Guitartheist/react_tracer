@@ -12,8 +12,10 @@ function LoginDisplay() {
     function LoginUser() {
         try{
             const payload = login({username, password, email:''}).unwrap();
-            console.log('fulfilled', payload.then(user=>{
-                navigate('/profile/'+username)
+            console.log('fulfilled', payload.then(
+                user=>{
+                navigate('/profile/'+username);
+                window.location.reload();
             }))
           } catch (error) {
             setDisplayError('Login Failed')

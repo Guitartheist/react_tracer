@@ -6,6 +6,9 @@ const pageSize = 10;
 const appUserSlice = api.injectEndpoints({
 
     endpoints: (builder) => ({
+        getUsernameFromToken: builder.query<AppUser, string>({
+            query: () => '/user/token'
+        }),
         getAllUsernames: builder.query<AppUserListEntry[], string>({
             query: () => '/user/all'
         }),
@@ -51,9 +54,13 @@ const appUserSlice = api.injectEndpoints({
                     body,
                 }
             }
-        })
-        //LogoutAppUser
-        //invalidate token, remove token from storage, remove user info from storage
+        }),
+        logoutAppUser: builder.query<null, string>({
+            query: () => ({
+                url: 'user/logout',
+                responseHandler: (response) => {localStorage.setItem('token',''); return response.text()},
+              })
+        }),
     }),
     overrideExisting: false
 })
@@ -65,4 +72,6 @@ export const { useGetUserByUserNameQuery,
     useLoginAppUserMutation, 
     useUpdateAppUserMutation, 
     useGetAllUsernamesQuery,
-    useGetPagedUsernamesQuery, } = appUserSlice
+    useGetPagedUsernamesQuery,
+    useGetUsernameFromTokenQuery,
+    useLogoutAppUserQuery, } = appUserSlice

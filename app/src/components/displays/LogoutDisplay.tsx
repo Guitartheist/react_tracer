@@ -4,9 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 function LogoutDisplay() {
     useLogoutAppUserQuery('');
-    window.location.reload();
     const navigate = useNavigate();
     navigate('/login');
+    window.location.reload();
+    
 
     return (
         <div className="d-flex justify-content-center">

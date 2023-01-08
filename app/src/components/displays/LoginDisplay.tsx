@@ -7,29 +7,27 @@ function LoginDisplay() {
     const [password, setPassword] = useState("")
     const [login] = useLoginAppUserMutation({})
     const navigate = useNavigate()
-    const [displayError, setDisplayError] = useState("")
+    const [errorMessage, setErrorMessage] = useState("")
 
     function LoginUser() {
-        try{
-            const payload = login({username, password, email:''}).unwrap();
-            console.log('fulfilled', payload.then(
-                user=>{
+        login({username, password, email:''})
+            .unwrap()
+            .then((payload) => {
+                console.log('fulfilled', payload);
                 navigate('/profile/'+username);
                 window.location.reload();
-            }))
-          } catch (error) {
-            setDisplayError('Login Failed')
-          }
+            })
+            .catch((error) => {
+                console.error('rejected', error);
+                setErrorMessage(error.data.message);
+            })
     }
 
     return (
         <div className="d-flex justify-content-center">
             <div className="card mw-320" >
                 <div className="card-body">
-                {
-                displayError ?
-                <h3>{displayError}</h3> : ''
-            }
+                    {errorMessage ? <p className="text-danger">{errorMessage}</p> : ''}
                     <h3>Login</h3>
                     <label>Username</label>
                     <div className="input-group mb-3">
@@ -40,6 +38,7 @@ function LoginDisplay() {
                         aria-describedby="basic-addon1"
                         onChange={(e) => {
                             setUsername(e.target.value);
+                            setErrorMessage("");
                         }} />
                     </div>
                     <label>Password</label>
@@ -51,6 +50,7 @@ function LoginDisplay() {
                         aria-describedby="basic-addon1"
                         onChange={(e) => {
                             setPassword(e.target.value);
+                            setErrorMessage("");
                         }} />
                     </div>
                     <p className="btn btn-primary" onClick={LoginUser}>Login</p>

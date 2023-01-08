@@ -4,7 +4,7 @@ export interface AppUser {
     username: string,
     password?: string,
     profileImage?: string,
-    profilePreviewImage?: string,
+    profilePreviewImage?: string
 }
 
 export interface AppUserListEntry {

@@ -1,19 +1,31 @@
 import React, { useState } from "react";
 import { useLoginAppUserMutation } from '../../common/services/appUserSlice'
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { storeUserData } from "../../common/slices/userSlice";
 
 function LoginDisplay() {
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
-    const [login, result] = useLoginAppUserMutation({})
-    const navigate = useNavigate()
+		const dispatch = useDispatch();
+		const navigate = useNavigate();
+		const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [login, result] = useLoginAppUserMutation({});
     const [displayError, setDisplayError] = useState("")
 
     function LoginUser() {
         try{
             const payload = login({username, password, email:''}).unwrap();
             console.log('fulfilled', payload.then(user=>{
-                navigate('/profile/'+username)
+							const userId = user.id;
+							const userEmail = user.email;
+							dispatch(
+								storeUserData({
+									userId,
+									username,
+									userEmail,
+								})
+							);
+							navigate('/profile/'+username)
             }))
           } catch (error) {
             setDisplayError('Login Failed')

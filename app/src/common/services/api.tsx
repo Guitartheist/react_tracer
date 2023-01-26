@@ -6,15 +6,13 @@ export const api = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:8080/',
         prepareHeaders: (headers) => {
-            let token = localStorage.getItem('token')
-
-            if (token)
-
-            if (token.length > 0) {
-                headers.append('authorization', `Bearer ${token}`)
-            }
-
-            return headers
+					const token = localStorage.getItem('token');
+					if (token) {
+						if (token.length > 0) {
+							headers.append('authorization', `Bearer ${token}`)
+						}
+					}
+					return headers
         },
     }),
     endpoints: () => ({})

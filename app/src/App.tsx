@@ -13,6 +13,9 @@ import LogoutDisplay from './components/displays/LogoutDisplay';
 import RegisterDisplay from './components/displays/RegisterDisplay';
 import UserDisplay from './components/displays/UserDisplay';
 import UserListDisplay from './components/displays/UserListDisplay';
+import CreateImagesDisplay from './components/displays/CreateImagesDisplay';
+import OrderItemDisplay from './components/displays/OrderItemDisplay';
+import CheckoutDisplay from './components/displays/CheckoutDisplay';
 import Navbar from './components/displays/Navbar';
 
 function App() {
@@ -20,11 +23,17 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navbar />}>
+          <Route
+            path="/"
+            element={<Navbar />}
+          >
             <Route path="login" element={<LoginDisplay />} />
             <Route path="register" element={<RegisterDisplay />} />
-            <Route path="userlist" element={<UserListDisplay />} />
             <Route path="logout" element={<LogoutDisplay />} />
+            <Route path="userlist" element={<UserListDisplay />} />
+            <Route path="create" element={<CreateImagesDisplay />} />
+            <Route path="orderitem" element={<OrderItemDisplay />} />
+            <Route path="checkout" element={<CheckoutDisplay />} />
             <Route
               path="/"
               element={

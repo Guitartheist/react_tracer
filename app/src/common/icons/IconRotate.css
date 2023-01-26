@@ -1,0 +1,28 @@
+.rotated {
+  transform: rotate(90deg);
+  animation-name: rotate;
+  animation-duration: .3s;
+}
+
+@keyframes rotate {
+  0%   {transform: rotate(15deg);}
+  20%  {transform: rotate(30deg);}
+  40%  {transform: rotate(45deg);}
+  60%  {transform: rotate(60deg);}
+  80%  {transform: rotate(75deg);}
+  100% {transform: rotate(90deg);}
+}
+
+.not-rotated {
+  animation-name: unrotate;
+  animation-duration: .3s;
+}
+
+@keyframes unrotate {
+  0%   {transform: rotate(90deg);}
+  20%  {transform: rotate(75deg);}
+  40%  {transform: rotate(60deg);}
+  60%  {transform: rotate(45deg);}
+  80%  {transform: rotate(15deg);}
+  100% {transform: rotate(0deg);}
+}

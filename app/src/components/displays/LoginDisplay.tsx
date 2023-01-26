@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useLoginAppUserMutation } from '../../common/services/appUserSlice'
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { storeUserData } from "../../common/slices/userSlice";
 
 function LoginDisplay() {
     const [username, setUsername] = useState("")
@@ -14,6 +16,14 @@ function LoginDisplay() {
             .unwrap()
             .then((payload) => {
                 console.log('fulfilled', payload);
+                dispatch(
+                  storeUserData({
+                    userId,
+                    username,
+                    userEmail,
+                  })
+                );
+                const dispatch = useDispatch();
                 navigate('/profile/'+username);
                 window.location.reload();
             })

@@ -35,6 +35,7 @@ function UserDisplay() {
             })
           } catch (error) {
             setDisplayError('Update Failed')
+            console.log(error);
           }
     }
 
@@ -65,7 +66,7 @@ function UserDisplay() {
             }
             {
                 isError ?
-                <h3>{error}</h3> : ''
+                <h3>There has been an error</h3> : ''
             }
             {currentData
                 ? 

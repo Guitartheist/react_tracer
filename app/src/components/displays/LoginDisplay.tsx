@@ -5,42 +5,39 @@ import { useDispatch } from "react-redux";
 import { storeUserData } from "../../common/slices/userSlice";
 
 function LoginDisplay() {
-		const dispatch = useDispatch();
-		const navigate = useNavigate();
-		const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [login, result] = useLoginAppUserMutation({});
-    const [displayError, setDisplayError] = useState("")
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
+    const [login] = useLoginAppUserMutation({})
+    const navigate = useNavigate()
+    const [errorMessage, setErrorMessage] = useState("")
 
     function LoginUser() {
-        try{
-            const payload = login({username, password, email:''}).unwrap();
-            console.log('fulfilled', payload.then(user=>{
-							const userId = user.id;
-							const userEmail = user.email;
-							dispatch(
-								storeUserData({
-									userId,
-									username,
-									userEmail,
-								})
-							);
-							navigate('/profile/'+username)
-            }))
-          } catch (error) {
-            setDisplayError('Login Failed')
-            console.log('ok then')
-          }
+        login({username, password, email:''})
+            .unwrap()
+            .then((payload) => {
+                console.log('fulfilled', payload);
+                dispatch(
+                  storeUserData({
+                    userId,
+                    username,
+                    userEmail,
+                  })
+                );
+                const dispatch = useDispatch();
+                navigate('/profile/'+username);
+                window.location.reload();
+            })
+            .catch((error) => {
+                console.error('rejected', error);
+                setErrorMessage(error.data.message);
+            })
     }
 
     return (
         <div className="d-flex justify-content-center">
             <div className="card mw-320" >
                 <div className="card-body">
-                {
-                displayError ?
-                <h3>{displayError}</h3> : ''
-            }
+                    {errorMessage ? <p className="text-danger">{errorMessage}</p> : ''}
                     <h3>Login</h3>
                     <label>Username</label>
                     <div className="input-group mb-3">
@@ -51,6 +48,7 @@ function LoginDisplay() {
                         aria-describedby="basic-addon1"
                         onChange={(e) => {
                             setUsername(e.target.value);
+                            setErrorMessage("");
                         }} />
                     </div>
                     <label>Password</label>
@@ -62,6 +60,7 @@ function LoginDisplay() {
                         aria-describedby="basic-addon1"
                         onChange={(e) => {
                             setPassword(e.target.value);
+                            setErrorMessage("");
                         }} />
                     </div>
                     <p className="btn btn-primary" onClick={LoginUser}>Login</p>

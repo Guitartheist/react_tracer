@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 
 import LoginDisplay from './components/displays/LoginDisplay';
+import LogoutDisplay from './components/displays/LogoutDisplay';
 import RegisterDisplay from './components/displays/RegisterDisplay';
 import UserDisplay from './components/displays/UserDisplay';
 import UserListDisplay from './components/displays/UserListDisplay';
@@ -25,10 +26,10 @@ function App() {
           <Route
             path="/"
             element={<Navbar />}
-            
           >
             <Route path="login" element={<LoginDisplay />} />
             <Route path="register" element={<RegisterDisplay />} />
+            <Route path="logout" element={<LogoutDisplay />} />
             <Route path="userlist" element={<UserListDisplay />} />
             <Route path="create" element={<CreateImagesDisplay />} />
             <Route path="orderitem" element={<OrderItemDisplay />} />

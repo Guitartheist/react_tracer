@@ -1,6 +1,6 @@
-import userEvent from "@testing-library/user-event";
+import { lutimes } from "fs";
 import React, { useState } from "react";
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useGetPagedUsernamesQuery } from '../../common/services/appUserSlice';
 
 function UserDisplay() {
@@ -11,14 +11,8 @@ function UserDisplay() {
 
     const { currentData , isFetching, isError, isLoading, error } = useGetPagedUsernamesQuery( page, { refetchOnMountOrArgChange: true } );
 
-    const [displayError, setDisplayError] = useState("")
-
     return (
         <div className="d-flex justify-content-center">
-            {
-                displayError ?
-                <h3>{displayError}</h3> : ''
-            }
             {
                 isFetching ?
                 <h3>Refreshing...</h3> : ''
@@ -36,13 +30,11 @@ function UserDisplay() {
                 <div  className="card max-320" >
                     <div className="card-body">
                     <h3>Registered Users</h3>
-                        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                            <ul className="vertical-nav">
+                            <table className=".table">
                                 {currentData.map(elem => {
-                                    return <Link className="nav-link active" aria-current="page" to={`/profile/${elem}`}>{elem}</Link>
+                                    return <Link className="nav-link active" aria-current="page" to={`/profile/${elem.username}`}><tr><td><img src={elem.profilePreviewImage}/></td><td>{elem.username}</td></tr></Link>
                                 })}
-                            </ul>
-                        </nav>
+                            </table>
                         <button onClick={() => setPage(page - 1)} hidden={page<2}>{"<"}</button>
                         <button>{page}</button>
                         <button onClick={() => setPage(page + 1)}>{">"}</button>

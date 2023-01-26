@@ -1,4 +1,3 @@
-import userEvent from "@testing-library/user-event";
 import React, { useState } from "react";
 import { useParams } from 'react-router-dom';
 import { useGetUserByUserNameQuery, useUpdateAppUserMutation } from '../../common/services/appUserSlice'
@@ -7,10 +6,11 @@ function UserDisplay() {
     const [update, result] = useUpdateAppUserMutation();
 
     const { userName } =  useParams();
-    const { currentData , isFetching, isError, isLoading, error } = useGetUserByUserNameQuery( userName ? userName : '' );
+    const { currentData , isFetching, isError, isLoading, error } = useGetUserByUserNameQuery( userName ? userName : '', { refetchOnMountOrArgChange: true } );
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [selectedFile, setSelectedFile] = useState("")
 
     const [displayError, setDisplayError] = useState("")
 
@@ -20,13 +20,34 @@ function UserDisplay() {
     function UpdateUser() {
         try{
             email ? email : currentData ? setEmail(currentData.email) : '';
-            const payload = update({ username : userName ? userName : '', email, password }).unwrap();
+            const payload = update({ 
+                username : userName ? userName : '', 
+                email, 
+                password, 
+                profileImage : selectedFile }).unwrap();
             payload.then(user=>{
+                let image = ""
+                if (result.data) 
+                    if (result.data.profileImage)
+                        image = result.data.profileImage
+                if (image)
+                    setSelectedFile( image )
             })
           } catch (error) {
             setDisplayError('Update Failed')
             console.log(error);
           }
+    }
+
+    function handleImageSelection(event: { target: { files: any; }; }) {
+        let files = event.target.files;
+        let reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+
+        reader.onload = (e) => {
+            if (e.target)
+                setSelectedFile(e.target.result ? e.target.result.toString() : "");
+        }
     }
 
     return (
@@ -49,9 +70,14 @@ function UserDisplay() {
             }
             {currentData
                 ? 
-                    <div className="card max-320" >
+                    <div className="card max-320">
                         <div className="card-body">
                             <h3>{userName}</h3>
+                            <img hidden={!(selectedFile || currentData.profileImage)} height="280" width="280" src={selectedFile ? selectedFile : currentData.profileImage}/>
+                            <label hidden={hideEdits}>Upload Image :</label>
+                            <div className="input-group mb-3" hidden={hideEdits}>
+                                <input type="file" name="upload_file" onChange={handleImageSelection} />
+                            </div>
                             <label hidden={hideEdits}>Email</label>
                             <div className="input-group mb-3">
                                 <input type="text"

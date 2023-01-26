@@ -1,15 +1,18 @@
 import { api } from './api';
-import { AppUser } from '../types'
+import { AppUser, AppUserListEntry } from '../types'
 
 const pageSize = 10;
 
 const appUserSlice = api.injectEndpoints({
 
     endpoints: (builder) => ({
-        getAllUsernames: builder.query<string[], string>({
+        getUsernameFromToken: builder.query<AppUser, string>({
+            query: () => '/user/token'
+        }),
+        getAllUsernames: builder.query<AppUserListEntry[], string>({
             query: () => '/user/all'
         }),
-        getPagedUsernames: builder.query<string[], number>({
+        getPagedUsernames: builder.query<AppUserListEntry[], number>({
             //the API starts at page 0 but users will expect pages to start at 1
             query: (page) => `/user/${page-1}/${pageSize}`
         }),
@@ -49,9 +52,13 @@ const appUserSlice = api.injectEndpoints({
                     body,
                 }
             }
-        })
-        //LogoutAppUser
-        //invalidate token, remove token from storage, remove user info from storage
+        }),
+        logoutAppUser: builder.query<null, string>({
+            query: () => ({
+                url: 'user/logout',
+                responseHandler: (response) => {localStorage.setItem('token',''); return response.text()},
+              })
+        }),
     }),
     overrideExisting: false
 })
@@ -63,4 +70,6 @@ export const { useGetUserByUserNameQuery,
     useLoginAppUserMutation, 
     useUpdateAppUserMutation, 
     useGetAllUsernamesQuery,
-    useGetPagedUsernamesQuery, } = appUserSlice
+    useGetPagedUsernamesQuery,
+    useGetUsernameFromTokenQuery,
+    useLogoutAppUserQuery, } = appUserSlice

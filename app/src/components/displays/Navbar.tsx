@@ -1,10 +1,14 @@
 import React from 'react';
 import { Outlet, Link } from "react-router-dom";
-import { useGetUsernameFromTokenQuery } from '../../common/services/appUserSlice';
+import { useLogoutAppUserMutation } from '../../common/services/appUserSlice';
 
 function Navbar() {
+    const [logout, result] = useLogoutAppUserMutation();
 
-    const { currentData , isFetching } = useGetUsernameFromTokenQuery( '', { refetchOnMountOrArgChange: true } );
+    function logoutAction() {
+        logout('');
+        console.log('logging out')
+    }
 
     return (
         <>
@@ -15,8 +19,7 @@ function Navbar() {
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        { isFetching ? 'checking token' : ''}
-                        {  !currentData ?
+                        {  !localStorage.getItem('appUser') ?
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li className="nav-item">
                                     <Link className="nav-link active" aria-current="page" to="/register">Register</Link>
@@ -33,10 +36,10 @@ function Navbar() {
                                     <Link className="nav-link active" aria-current="page" to='/userlist'>Roll Call</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link active" aria-current="page" to={`/profile/${currentData.username}`}>My Profile</Link>
+                                    <Link className="nav-link active" aria-current="page" to={`/profile/${localStorage.getItem('appUser')}`}>My Profile</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link active" aria-current="page" to='/logout'>Logout {currentData.username}</Link>
+                                    <Link className="nav-link active" aria-current="page" to='/' onClick={logoutAction}>Logout {localStorage.getItem('appUser')}</Link>
                                 </li>
                             </ul> }
                         

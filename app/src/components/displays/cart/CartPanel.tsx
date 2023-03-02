@@ -1,11 +1,9 @@
 import React, { Dispatch, ReactElement, SetStateAction, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Panel from "../../popupWindows/panel/Panel";
-import { Cart, CartData, CartItem } from './type';
+import { CartData, CartItem } from './type';
 import { RootState } from '../../../common/store';
-import { Button } from 'bootstrap';
 import { UserData } from '../user/types';
-import { storeCartData, storeCartItems } from '../../../common/slices/cartSlice';
 import { CartItemDisplayer } from './CartItemDisplayer';
 import { useNavigate } from 'react-router-dom';
 
@@ -36,18 +34,16 @@ export const CartPanel = (props: ICartPanel) => {
 
 	const content = 
 		cartItemsFromState.map((cartItem, index) => {		
-			return <CartItemDisplayer 
+			return (
+				<CartItemDisplayer 
 					index={index}
 					cartItem={cartItem}
 					key={cartItem.cartItemId}
 				/>
+			);
 		})
 	
 	const data = cartDataFromState;
-		
-		console.log(content);
-		console.log(data);
-		console.log("^^^^^^^^^");
 	const navigateToCheckout = () => {
 		setShowCartPanel(false);
 		navigate("/checkout");	
@@ -78,5 +74,3 @@ export const CartPanel = (props: ICartPanel) => {
 };
 
 export default CartPanel;
-
-//{cartDisplayer ? cartDisplayer : null}

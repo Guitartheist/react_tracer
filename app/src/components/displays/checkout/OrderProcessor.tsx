@@ -16,7 +16,6 @@ export const OrderProcessor = () => {
     costPreTotal,
 	} = cartData;
 
-
   return (
 		<>
 		hasAdressData ?

@@ -5,9 +5,9 @@ import {
 } from "../../components/displays/image/types";
 
 interface ImageState {
-    imageSizeData: ImageSizeData,
-    selectedImage: ImageData,
-    rotated: boolean,
+	imageSizeData: ImageSizeData,
+	selectedImage: ImageData,
+	rotated: boolean,
 };
 
 const initialState:ImageState = {

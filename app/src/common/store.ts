@@ -8,14 +8,14 @@ import cartReducer from "./slices/cartSlice";
 
 export const store = configureStore({
     reducer: {
-        [api.reducerPath]: api.reducer,
-				user: userReducer,
-				image: imageReducer,
-        product: productReducer,
-				cart: cartReducer,
+			[api.reducerPath]: api.reducer,
+			user: userReducer,
+			image: imageReducer,
+			product: productReducer,
+			cart: cartReducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(api.middleware),
+			getDefaultMiddleware().concat(api.middleware),
 })
 
 setupListeners(store.dispatch)

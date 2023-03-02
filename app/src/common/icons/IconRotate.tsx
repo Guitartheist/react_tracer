@@ -43,9 +43,7 @@ export const IconRotate = (props:RotateProps) => {
         onClick={rotateIcon}
         width="25px"
         height="25px" 
-      />);
+      />
+		);
   }
 }
- 
-
-

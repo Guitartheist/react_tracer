@@ -1,52 +1,59 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { CartItem } from '../../components/displays/checkout/type';
+import { Cart, CartData, CartItem } from '../../components/displays/cart/type';
 
 interface CartState {
-  cart: CartItem[],
+  cartData: CartData,
+	cartItems: CartItem[]
 };
 
 const initialState:CartState = {
-	cart: [],
+	cartData: {
+		userId: -1,
+    cartId: "",
+    costPreTotal: "0.00",
+	},
+	cartItems: [],
 }
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-		storeCart(state, action) {
+		storeCartData(state, action) {
 			return{
 				...state,
-				cart: action.payload,
+				cartData: action.payload,
 			}
 		},
-    addToCart(state, action) {
-      return{
+		storeCartItems(state, action) {
+			return{
+				...state,
+				cartItems: action.payload,
+			}
+		},
+    /*removeFromCartByItemId(state, action) { // send index of item to remove
+			return{
         ...state,
-        cart: [...state.cart, action.payload],
+				cartItems: state.cartItems.splice(action.payload, 1)
       }
-    },
-    removeFromCartByItemId(state, action) { // send index of item to remove
-      return{
-        ...state,
-        cart: [
-          ...state.cart.slice(0, action.payload),
-          ...state.cart.slice(action.payload + 1),
-        ],
-      }
-    },
+    },*/
     clearCart(state, action) {
       return{
         ...state,
-        cart: [],
+        cartData: {
+					userId: -1,
+					cartId: "",
+					costPreTotal: "0.00",
+				},
+				cartItems: [],
       }
     },
   }
 });
 
 export const {
-	storeCart,
-  addToCart,
-  removeFromCartByItemId,
+	storeCartData,
+  storeCartItems,
   clearCart,
 } = cartSlice.actions;
 

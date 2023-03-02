@@ -1,5 +1,5 @@
 import { JsonWebKeyInput } from "crypto";
-import { CartItem } from "../components/displays/checkout/type";
+import { CartItem } from "../components/displays/cart/type";
 
 export interface AppUser {
     id?: number,

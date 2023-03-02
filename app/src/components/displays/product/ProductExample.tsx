@@ -22,7 +22,7 @@ export const ProductExample = ({name, size, description, price, in_stock, select
   const [productWidth, setProductWidth] = useState(0);
   const [productHeight, setProductHeight] = useState(0);
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 	
   useEffect(() => {
     const dimensionArray = size.split('x');

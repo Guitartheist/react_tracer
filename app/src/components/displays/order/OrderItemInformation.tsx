@@ -1,27 +1,29 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from "../../../common/store";
-import { CartItem } from "../checkout/type";
-import CartPanel from "../../displays-mini/cart/CartPanel";
+import { CartItem } from "../cart/type";
+import CartPanel from "../cart/CartPanel";
 import { useCreateCartItemMutation } from "../../../common/services/cartSlice";
 import UserDisplay from "../UserListDisplay";
 import { checkCookieExists } from "../../../common/utils/cookies";
+import { Cart } from "../cart/type";
 import { UserData } from "../user/types";
-import { addToCart, storeCart } from "../../../common/slices/cartSlice";
+import { storeCartData, storeCartItems } from "../../../common/slices/cartSlice";
+import { CartContext } from "../cart/CartContext";
 
 export const OrderItemInformation = () => {
 	const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [showCartPanel, setShowCartPanel] = useState(false);
-  const [createCartItem, createCartItemResult] = useCreateCartItemMutation({})
+	const { setCartOpen } = useContext(CartContext);
+  const [createCartItem, createCartItemResult] = useCreateCartItemMutation({});
 	const userInfo = useSelector<RootState, UserData>(state => state.user.userData);
 	const currentProductItem = useSelector<RootState, CartItem>(state => state.product.currentProduct);
 	
 	const {
-    id,
+    userId,
     username,
-    email,
+    userEmail,
 	} = userInfo;
 
 	const {
@@ -50,34 +52,30 @@ export const OrderItemInformation = () => {
 			const cartItemPayload = createCartItem({
 				...currentProductItem,
 				cartItemId: -1,
-				userId: id || -1,
+				userId: userId || -1,
 				cartId: localStorage.getItem("cartId"),
 			}).unwrap()
 			.then(cart => {
-				console.log("WWWWWWWWWWWWHHHHHHHHHHHHHAAAAAAAAAATTTTTTTTTT");
-				console.log(cart);
+				const {
+					cartData,
+					cartItems,
+				} = cart;
+				
 				if (localStorage.getItem("cartId")) {
-
-					if (localStorage.getItem("cartId") !== cart[0].cartId) {
+					if (localStorage.getItem("cartId") !== cartData.cartId) {
 						console.log("Cart ID's don't match");
-						/*
-
-						*/
+						// handle this later
 					}
 				} else {
-
-					if (cart[0].cartId) {
-						localStorage.setItem("cartId", cart[0].cartId);
+					if (cartData.cartId) {
+						localStorage.setItem("cartId", cartData.cartId);
 					} else {
 						console.log("Didn't recieve cart id from server");
-						/* 
-
-						*/
+						
 					}
 				}
-				dispatch(
-					storeCart(cart)
-				);
+				dispatch(storeCartData(cartData));
+				dispatch(storeCartItems(cartItems));
 			});
     } catch (error) {
       console.log("");
@@ -85,8 +83,8 @@ export const OrderItemInformation = () => {
     }
 
     
-    setShowCartPanel(true);
-    console.log("Add to Cart");
+    setCartOpen(true);
+		console.log("Add to Cart");
   }
 
   const BuyNow = () => {
@@ -116,10 +114,6 @@ export const OrderItemInformation = () => {
           </div>
         </div>
       </div>
-      <CartPanel
-        showCartPanel={showCartPanel}
-        setShowCartPanel={setShowCartPanel}
-      />
     </>
   );
 }

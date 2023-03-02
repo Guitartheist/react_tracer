@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ProductDataResponse } from "../../components//displays/product/types";
-import { CartItem } from '../../components/displays/checkout/type';
+import { CartItem } from '../../components/displays/cart/type';
 
 interface ProductState {
   wallArtProducts:  ProductDataResponse[] | null,

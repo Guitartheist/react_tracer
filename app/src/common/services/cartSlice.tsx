@@ -1,16 +1,22 @@
-import { CartItem, CartItemId } from '../../components/displays/checkout/type';
+import { Cart, CartData, CartItem } from '../../components/displays/cart/type';
 import { api } from './api';
+
+export type CartItemId = {
+	cartItemId: number,
+}
 
 const cartSlice = api.injectEndpoints({
 	endpoints: (builder) => ({
-    findCart: builder.query<CartItem[], string | null>({
-      query: (cartId) => `cart/find/${cartId}`
-    }),
-
-		findCartItem: builder.query<CartItem, number>({
-      query: (itemId) => `find/item/${itemId}`
-    }),
-    createCartItem: builder.mutation<CartItem[], CartItem>({
+		findCartByUserId: builder.query<Cart, number>({
+      query: (userId) => `cart/find/user/${userId}`
+		}),
+		findCartByCartId: builder.query<Cart, string>({
+      query: (cartId) => `cart/find/cart/${cartId}`
+		}),
+		deleteCartByCartId: builder.query<CartItem[], string>({
+			query: (cartId) => `cart/delete/cart/${cartId}`
+		}),
+    createCartItem: builder.mutation<Cart, CartItem>({
 			query(body) {
         return {
           url: '/cart/create/item',
@@ -19,19 +25,7 @@ const cartSlice = api.injectEndpoints({
 				}
       },
     }),
-    updateCartItem: builder.mutation<CartItem, CartItem>({
-      query(body) {
-        return {
-          url: '/cart/update/item',
-          method: 'POST',
-          body,
-        }
-      },
-    }),
-		//deleteCart: builder.query<CartItem[], string>({
-		//	query: (cartId) => `cart/delete/${cartId}`
-    //}),  
-    deleteCartItem: builder.mutation<null, CartItemId>({
+    deleteCartItem: builder.mutation<Cart, CartItemId>({
 			query(body) {
         return {
           url: 'cart/delete/item/',
@@ -46,10 +40,9 @@ const cartSlice = api.injectEndpoints({
 })
 
 export const {
-  useFindCartQuery,
-  useFindCartItemQuery,
+	useFindCartByUserIdQuery,
+	useLazyFindCartByCartIdQuery,
+	useDeleteCartByCartIdQuery,
   useCreateCartItemMutation,
-  useUpdateCartItemMutation,
-  //useDeleteCartQuery,
 	useDeleteCartItemMutation,
 } = cartSlice

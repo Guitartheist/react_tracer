@@ -5,32 +5,34 @@ import { useDispatch } from "react-redux";
 import { storeUserData } from "../../common/slices/userSlice";
 
 function LoginDisplay() {
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
-    const [login] = useLoginAppUserMutation({})
-    const navigate = useNavigate()
-    const [errorMessage, setErrorMessage] = useState("")
+  const dispatch = useDispatch();
+	const navigate = useNavigate()    
+	const [username, setUsername] = useState("")
+	const [password, setPassword] = useState("")
+	const [login] = useLoginAppUserMutation({})
+	const [errorMessage, setErrorMessage] = useState("")
 
-    function LoginUser() {
-        login({username, password, email:''})
-            .unwrap()
-            .then((payload) => {
-                console.log('fulfilled', payload);
-                dispatch(
-                  storeUserData({
-                    userId,
-                    username,
-                    userEmail,
-                  })
-                );
-                const dispatch = useDispatch();
-                navigate('/profile/'+username);
-                window.location.reload();
-            })
-            .catch((error) => {
-                console.error('rejected', error);
-                setErrorMessage(error.data.message);
-            })
+	function LoginUser() {
+		login({username, password, email:''})
+				.unwrap()
+				.then((payload) => {
+						console.log('fulfilled', payload);
+						const userId = payload.id;
+						const userEmail = payload.email;
+						dispatch(
+							storeUserData({
+								userId,
+								username,
+								userEmail,
+							})
+						);
+						navigate('/profile/'+username);
+						window.location.reload();
+				})
+				.catch((error) => {
+						console.error('rejected', error);
+						setErrorMessage(error.data.message);
+				})
     }
 
     return (

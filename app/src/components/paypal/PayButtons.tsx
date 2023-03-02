@@ -4,16 +4,18 @@ import {
   PayPalButtons,
   usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
+import './styles/PayButtons.css';
 
 const amount = "2";
 const currency = "USD";
 
 type buttonWrapperProps = {
+	amount: string,
   currency: string,
   showSpinner: boolean,
 }
 
-const ButtonWrapper = ({currency, showSpinner}:buttonWrapperProps) => {
+const ButtonWrapper = ({amount, currency, showSpinner}:buttonWrapperProps) => {
   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
 
   useEffect(() => {
@@ -30,6 +32,7 @@ const ButtonWrapper = ({currency, showSpinner}:buttonWrapperProps) => {
     <>
       { (showSpinner && isPending) && <div className="spinner" /> }
       <PayPalButtons
+				className="paypal-buttons"
         style={{
           color: "blue",
           layout: "vertical",
@@ -66,9 +69,14 @@ const ButtonWrapper = ({currency, showSpinner}:buttonWrapperProps) => {
   );
 }
 
-export default function PayButtons() {
+type buttonProps = {
+	price: string,
+}
+
+export default function PayButtons({price}: buttonProps) {
   return (
-    <div style={{ maxWidth: "750px", minHeight: "200px" }}>
+    <div>
+			<p>{price}</p>
       <PayPalScriptProvider
         options={{
           "client-id": "test",
@@ -77,6 +85,7 @@ export default function PayButtons() {
         }}
       >
         <ButtonWrapper
+					amount={price}
           currency={currency}
           showSpinner={false}
         />

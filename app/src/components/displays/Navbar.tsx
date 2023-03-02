@@ -1,19 +1,46 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Outlet, Link } from "react-router-dom";
 import { useGetUsernameFromTokenQuery } from '../../common/services/appUserSlice';
+import { useLazyFindCartByCartIdQuery } from '../../common/services/cartSlice';
+import { storeCartData, storeCartItems } from '../../common/slices/cartSlice';
+import CartContextProvider, { CartContext } from './cart/CartContext';
+import CartIcon from './cart/CartIcon';
+
 
 function Navbar() {
-
+		const dispatch = useDispatch();
     const { currentData , isFetching } = useGetUsernameFromTokenQuery( '', { refetchOnMountOrArgChange: true } );
+		const [getCart, cartResults, lastPromiseInfo] = useLazyFindCartByCartIdQuery();
+		
+		const cartId = localStorage.getItem("cartId");
+		if (cartId && cartId !== lastPromiseInfo.lastArg) {
+			getCart(cartId);
+		}
+
+		useEffect(() => {
+			if (cartResults && cartResults.data) {
+				const {
+					cartData,
+					cartItems
+				} = cartResults.data;
+				dispatch(storeCartData(cartData));
+				dispatch(storeCartItems(cartItems));
+			}
+		}, [cartResults])
+
+	
+		
 
     return (
-        <>
+        <>						
+				<CartContextProvider>
             <nav 
                 className="navbar navbar-expand-lg navbar-light bg-light"
                 style={{
-                    marginBottom: '1rem',
+									marginBottom: '1rem',
                 }}
-            >
+								>
                 <div className="container-fluid">
                     <a 
                         className="navbar-brand" 
@@ -45,7 +72,7 @@ function Navbar() {
                         { isFetching ? 'checking token' : ''}
                         {  !currentData ?
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                                <li className="nav-item">
+																<li className="nav-item">
                                     <Link className="nav-link active" aria-current="page" to="/register">Register</Link>
                                 </li>
                                 <li className="nav-item">
@@ -54,9 +81,12 @@ function Navbar() {
                                 <li className="nav-item">
                                     <Link className="nav-link active" aria-current="page" to='/userlist'>Roll Call</Link>
                                 </li>
+																<li className="nav-item">
+                                    <Link className="nav-link active" aria-current="page" to='/create'>Create</Link>
+                                </li>
                             </ul>
                         :  <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                                <li className="nav-item">
+																<li className="nav-item">
                                     <Link className="nav-link active" aria-current="page" to='/userlist'>Roll Call</Link>
                                 </li>
                                 <li className="nav-item">
@@ -65,10 +95,20 @@ function Navbar() {
                                 <li className="nav-item">
                                     <Link className="nav-link active" aria-current="page" to='/logout'>Logout {currentData.username}</Link>
                                 </li>
+																<li className="nav-item">
+                                    <Link className="nav-link active" aria-current="page" to='/create'>Create</Link>
+                                </li>
                             </ul> }
                     </div>
+										<div className="d-flex">
+											<ul className="navbar-nav me-auto mb-lg-0">
+												<li className="nav-item">													
+													<CartIcon />
+												</li>
+											</ul>
+										</div>
                     <div className="d-flex flex-row-reverse bd-highlight">
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-auto">
                             <li className="nav-item">
                                 <Link className="nav-link active" aria-current="page" to="/darkmode">Darkmode</Link>
                             </li>
@@ -76,7 +116,9 @@ function Navbar() {
                     </div>
                 </div>
             </nav>
-            <Outlet />
+						<Outlet />	
+					</CartContextProvider>
+        			  
         </>
     );
 }

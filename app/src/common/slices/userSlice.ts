@@ -7,9 +7,9 @@ interface UserState {
 
 const initialState:UserState = {
   userData: {
-    id: -1,
+		userId: -1,
     username: '',
-    email: '',
+		userEmail: '',
   }
 };
 

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+//import { useDispatch } from 'react-redux';
 import { Outlet, Link } from "react-router-dom";
 import { useLogoutAppUserMutation } from '../../common/services/appUserSlice';
 import { useLazyFindCartByCartIdQuery } from '../../common/services/cartSlice';
@@ -8,8 +8,9 @@ import CartContextProvider, { CartContext } from './cart/CartContext';
 import CartIcon from './cart/CartIcon';
 
 function Navbar() {
-	const dispatch = useDispatch();
+	//const dispatch = useDispatch();
 	const [logout, result] = useLogoutAppUserMutation();
+	/*
 	const [getCart, cartResults, lastPromiseInfo] = useLazyFindCartByCartIdQuery();
 		
 	const cartId = localStorage.getItem("cartId");
@@ -27,7 +28,7 @@ function Navbar() {
 			dispatch(storeCartItems(cartItems));
 		}
 	}, [cartResults])	
-
+*/
 	function logoutAction() {
 		logout('');
 	}
@@ -52,13 +53,13 @@ function Navbar() {
 						}}>
 						<p style={{
 							display: 'inline',
-							fontFamily: "'Brush Script MT', cursive",
-							fontSize: '1.5em',								
-						}}>AfterNoon </p>
+							fontFamily: 'Garamond, serif',
+							fontSize: '1em',								
+						}}>Afternoon </p>
 						<p style={{
 							display: 'inline',
-							fontFamily: 'Garamond, serif',
-							fontSize: '1.1em',
+							fontFamily: "'Brush Script MT', cursive",
+							fontSize: '1.4em',
 						}}>Divebar</p>
 					</a>
 					<button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

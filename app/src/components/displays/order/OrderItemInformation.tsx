@@ -1,13 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from "../../../common/store";
 import { CartItem } from "../cart/type";
-import CartPanel from "../cart/CartPanel";
 import { useCreateCartItemMutation } from "../../../common/services/cartSlice";
-import UserDisplay from "../UserListDisplay";
-import { checkCookieExists } from "../../../common/utils/cookies";
-import { Cart } from "../cart/type";
 import { UserData } from "../user/types";
 import { storeCartData, storeCartItems } from "../../../common/slices/cartSlice";
 import { CartContext } from "../cart/CartContext";
@@ -39,13 +35,6 @@ export const OrderItemInformation = () => {
 		productId,
 		prompt,
 	} = currentProductItem;
-
-  /*console.log(orderInfo.in_stock);
-  console.log(orderInfo.selectedImage);
-  console.log(orderInfo.imageSize);
-  console.log(orderInfo.rotated);
-  console.log(orderInfo.id);
-  */
 
   const AddToCart = () => {
 		try {
@@ -80,9 +69,7 @@ export const OrderItemInformation = () => {
     } catch (error) {
       console.log("");
       console.log(error);
-    }
-
-    
+    } 
     setCartOpen(true);
 		console.log("Add to Cart");
   }

@@ -4,7 +4,6 @@ import { RootState } from "../../../common/store";
 import { CartData, CartItem } from "./type";
 import { UserData } from "../user/types";
 import CartItemDisplayer from "./CartItemDisplayer";
-import { storeCartData, storeCartItems } from '../../../common/slices/cartSlice';
 
 export const CartDisplayer = () => {
 	const dispatch = useDispatch();

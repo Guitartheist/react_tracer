@@ -1,6 +1,5 @@
 import React, { ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { storeCartData, storeCartItems } from "../../common/slices/cartSlice";
 import { RootState } from "../../common/store";
 import CartDisplayer from "./cart/CartDisplayer";
 import CartItemDisplayer from "./cart/CartItemDisplayer";

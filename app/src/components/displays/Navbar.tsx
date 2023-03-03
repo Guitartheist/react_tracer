@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Outlet, Link } from "react-router-dom";
-import { useGetUsernameFromTokenQuery } from '../../common/services/appUserSlice';
+import { useLogoutAppUserMutation } from '../../common/services/appUserSlice';
 import { useLazyFindCartByCartIdQuery } from '../../common/services/cartSlice';
 import { storeCartData, storeCartItems } from '../../common/slices/cartSlice';
 import CartContextProvider, { CartContext } from './cart/CartContext';
@@ -9,7 +9,7 @@ import CartIcon from './cart/CartIcon';
 
 function Navbar() {
 	const dispatch = useDispatch();
-	const { currentData , isFetching } = useGetUsernameFromTokenQuery( '', { refetchOnMountOrArgChange: true } );
+	const [logout, result] = useLogoutAppUserMutation();
 	const [getCart, cartResults, lastPromiseInfo] = useLazyFindCartByCartIdQuery();
 		
 	const cartId = localStorage.getItem("cartId");
@@ -27,6 +27,10 @@ function Navbar() {
 			dispatch(storeCartItems(cartItems));
 		}
 	}, [cartResults])	
+
+	function logoutAction() {
+		logout('');
+	}
 
 	return (
 		<>						
@@ -61,8 +65,8 @@ function Navbar() {
 						<span className="navbar-toggler-icon"></span>
 					</button>
 						<div className="collapse navbar-collapse" id="navbarSupportedContent">
-							{ isFetching ? 'checking token' : ''}
-							{  !currentData ?
+							{ !localStorage.getItem('appUser') ?
+
 								<ul className="navbar-nav me-auto mb-2 mb-lg-0">
 									<li className="nav-item">
 										<Link className="nav-link active" aria-current="page" to="/register">Register</Link>
@@ -82,10 +86,10 @@ function Navbar() {
 										<Link className="nav-link active" aria-current="page" to='/userlist'>Roll Call</Link>
 									</li>
 									<li className="nav-item">
-										<Link className="nav-link active" aria-current="page" to={`/profile/${currentData.username}`}>My Profile</Link>
+										<Link className="nav-link active" aria-current="page" to={`/profile/${localStorage.getItem('appUser')}`}>My Profile</Link>
 									</li>
 									<li className="nav-item">
-										<Link className="nav-link active" aria-current="page" to='/logout'>Logout {currentData.username}</Link>
+										<Link className="nav-link active" aria-current="page" to='/' onClick={logoutAction}>Logout {localStorage.getItem('appUser')}</Link>
 									</li>
 									<li className="nav-item">
 										<Link className="nav-link active" aria-current="page" to='/create'>Create</Link>
